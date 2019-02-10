@@ -28,7 +28,6 @@ public class Problems {
             }
 
         }
-//        System.out.println(big_chungus);
         return big_chungus;
     }
 
