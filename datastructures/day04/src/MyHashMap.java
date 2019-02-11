@@ -49,11 +49,15 @@ public class MyHashMap<K, V> implements Map<K, V> {
     /**
      * given a key, return the bucket where the `K, V` pair would be stored if it were in the map.
      */
+//    DONE
     private LinkedList<Entry> chooseBucket(Object key) {
         // TODO
         // hint: use key.hashCode() to calculate the key's hashCode using its built in hash function
         // then use % to choose which bucket to return.
-        return null;
+        int code = key.hashCode();
+        int whichBucket = code % buckets.length;
+
+        return buckets[whichBucket];
     }
 
     @Override
@@ -69,25 +73,48 @@ public class MyHashMap<K, V> implements Map<K, V> {
     /**
      * return true if key is in map
      */
+//    DONE
     @Override
     public boolean containsKey(Object key) {
         // TODO
+        int code = key.hashCode();
+        int whichBucket = code % buckets.length;
+        for (int i = 0; i<buckets[whichBucket].size(); i++) {
+            K fkey = buckets[whichBucket].get(i).key;
+            if (fkey.equals(key)) {
+                return true;
+            }
+        }
         return false;
     }
 
     /**
      * return true if value is in map
      */
+//    DONE
     @Override
     public boolean containsValue(Object value) {
         // TODO
+        for (int i = 0; i<buckets.length; i++) {
+            if (!buckets[i].isEmpty()) {
+                V fval = buckets[i].getFirst().value;
+                if (fval == value) {
+                    return true;
+                }
+            }
+
+        }
         return false;
     }
 
+//    DONE-ish
     @Override
     public V get(Object key) {
         // TODO
-        return null;
+        int code = key.hashCode();
+        int whichBucket = code % buckets.length;
+        V fval = buckets[whichBucket].getFirst().value;
+        return fval;
     }
 
     /**
@@ -99,6 +126,8 @@ public class MyHashMap<K, V> implements Map<K, V> {
         // TODO: Complete this method
         // hint: use chooseBucket() to determine which bucket to place the pair in
         // hint: use rehash() to appropriately grow the hashmap if needed
+        Entry newEntry = new Entry(key, value);
+        chooseBucket(key).add(newEntry);
         return null;
     }
 
