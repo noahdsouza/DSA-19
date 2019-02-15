@@ -12,11 +12,11 @@ public class MergeSort extends SortAlgorithm {
      * Use Insertion Sort if the length of the array is <= INSERTION_THRESHOLD
      *
      * TODO
-     * Best-case runtime:
-     * Worst-case runtime:
-     * Average-case runtime:
+     * Best-case runtime: O(n log(n)) since it divides in half recursively and the linearly sorts from there
+     * Worst-case runtime: ""
+     * Average-case runtime: ""
      *
-     * Space-complexity:
+     * Space-complexity: O(n) cause that feel right
      */
     @Override
     public int[] sort(int[] array) {
@@ -63,15 +63,12 @@ public class MergeSort extends SortAlgorithm {
                 ab[abind] = a[aind];
                 aind++;
                 abind++;
-//                System.out.println(Arrays.toString(ab));
             } else {
                 ab[abind] = b[bind];
                 bind++;
                 abind++;
-//                System.out.println(Arrays.toString(ab));
             }
         }
-//        System.out.println(Arrays.toString(ab));
         return ab;
     }
 
