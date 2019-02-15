@@ -19,6 +19,12 @@ public class HeapSort extends SortAlgorithm {
     // Use either recursion or a loop to then sink the child
     public void sink(int i) {
         // TODO
+//        if A[i] > both kids
+//            stop
+//        else
+//            idx = max(A[i]'s kids')
+//            swap i and idx
+//            sink(A,idx)
     }
 
     // Given the array, build a heap by correcting every non-leaf's position, starting from the bottom, then
@@ -30,14 +36,16 @@ public class HeapSort extends SortAlgorithm {
         for (int i=this.size / 2 - 1; i>=0; i--) {
             // TODO
         }
+//        for i = len(A)/2 -1 to 0
+//            sink(A,i)
     }
 
     /**
-     * Best-case runtime:
-     * Worst-case runtime:
-     * Average-case runtime:
+     * Best-case runtime: O(n log(n))
+     * Worst-case runtime: O(n log(n))
+     * Average-case runtime: O(n log(n))
      *
-     * Space-complexity:
+     * Space-complexity: O(1)
      */
     @Override
     public int[] sort(int[] array) {
@@ -46,6 +54,12 @@ public class HeapSort extends SortAlgorithm {
         for (int i=size-1; i>0; i--) {
             // TODO
         }
+        
+//        heapify(array);
+//        for i=size-1 to 1
+//            swap(array[1],array[0]);
+//            size--;
+//            sink(0)
 
         return heap;
     }
