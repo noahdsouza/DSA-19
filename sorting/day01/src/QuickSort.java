@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class QuickSort extends SortAlgorithm {
@@ -21,6 +22,16 @@ public class QuickSort extends SortAlgorithm {
     @Override
     public int[] sort(int[] array) {
         // TODO: Sort the array. Make sure you avoid the O(N^2) runtime worst-case
+        int ind, temp;
+        Random random = new Random();
+        for (int i = array.length-1; i>0; i--) {
+            ind = random.nextInt(i+1);
+            temp = array[ind];
+            array[ind] = array[i];
+            array[i] = temp;
+        }
+        quickSort(array,0,array.length-1);
+
         return array;
     }
 
@@ -36,6 +47,8 @@ public class QuickSort extends SortAlgorithm {
         if (lo < hi) {
             int p = partition(a, lo, hi);
             // TODO
+            quickSort(a,lo,p-1);
+            quickSort(a,p+1,hi);
         }
     }
 
@@ -50,7 +63,16 @@ public class QuickSort extends SortAlgorithm {
      */
     public int partition(int[] array, int lo, int hi) {
         // TODO
-        return 0;
+        int count = lo+1;
+        int p = array[lo];
+        for (int i=lo+1; i<=hi; i++) {
+            if (array[i] < p) {
+                swap(array,count,i);
+                count++;
+            }
+        }
+        swap(array,lo,count-1);
+        return count-1;
     }
 
 }

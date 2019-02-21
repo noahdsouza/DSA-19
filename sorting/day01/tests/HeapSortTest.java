@@ -39,6 +39,7 @@ public class HeapSortTest {
         in = new int[]{1, 3, 2, 5, 1, 2, 7, 9};
         heap = new int[]{9, 5, 7, 3, 1, 2, 2, 1};
         hs.heapify(in);
+        System.out.println(Arrays.toString(in));
         assertArrayEquals(in, heap);
     }
 
