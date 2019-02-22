@@ -84,7 +84,7 @@ public class HeapSort extends SortAlgorithm {
      * Worst-case runtime: O(n log(n))
      * Average-case runtime: O(n log(n))
      *
-     * Space-complexity: O(1)
+     * Space-complexity: O(1) in theory but O(log(n)) in DSA because sad
      */
     @Override
     public int[] sort(int[] array) {

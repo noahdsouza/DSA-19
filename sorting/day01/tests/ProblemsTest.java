@@ -27,14 +27,14 @@ public class ProblemsTest {
 
     @Test
     public void testRunningMedianRandom() {
-        assertTrue(Arrays.equals(Problems.runningMedian(emptyCase), Problems.runningMedianReallySlow(emptyCase)));
-        assertTrue(Arrays.equals(Problems.runningMedian(oneCase), Problems.runningMedianReallySlow(oneCase)));
-        assertTrue(Arrays.equals(Problems.runningMedian(twoCase), Problems.runningMedianReallySlow(twoCase)));
-        assertTrue(Arrays.equals(Problems.runningMedian(twoCase), Problems.runningMedianReallySlow(twoCase)));
-        assertTrue(Arrays.equals(Problems.runningMedian(threeCase), Problems.runningMedianReallySlow(threeCase)));
-        assertTrue(Arrays.equals(Problems.runningMedian(eightCase), Problems.runningMedianReallySlow(eightCase)));
-        assertTrue(Arrays.equals(Problems.runningMedian(nineCase), Problems.runningMedianReallySlow(nineCase)));
-        assertTrue(Arrays.equals(Problems.runningMedian(twoCase), Problems.runningMedianReallySlow(twoCase)));
-        assertTrue(Arrays.equals(Problems.runningMedian(longCase), Problems.runningMedianReallySlow(longCase)));
+        assertTrue(Arrays.equals(Problems.runningMedian(emptyCase), Problems.runningMedianReallySlowly(emptyCase)));
+        assertTrue(Arrays.equals(Problems.runningMedian(oneCase), Problems.runningMedianReallySlowly(oneCase)));
+        assertTrue(Arrays.equals(Problems.runningMedian(twoCase), Problems.runningMedianReallySlowly(twoCase)));
+        assertTrue(Arrays.equals(Problems.runningMedian(twoCase), Problems.runningMedianReallySlowly(twoCase)));
+        assertTrue(Arrays.equals(Problems.runningMedian(threeCase), Problems.runningMedianReallySlowly(threeCase)));
+        assertTrue(Arrays.equals(Problems.runningMedian(eightCase), Problems.runningMedianReallySlowly(eightCase)));
+        assertTrue(Arrays.equals(Problems.runningMedian(nineCase), Problems.runningMedianReallySlowly(nineCase)));
+        assertTrue(Arrays.equals(Problems.runningMedian(twoCase), Problems.runningMedianReallySlowly(twoCase)));
+        assertTrue(Arrays.equals(Problems.runningMedian(longCase), Problems.runningMedianReallySlowly(longCase)));
     }
 }
