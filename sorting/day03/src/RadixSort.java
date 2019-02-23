@@ -23,15 +23,34 @@ public class RadixSort {
             L[i] = new LinkedList<>();
         for (int i : A) {
             // TODO: Extract the relevant digit from i, and add i to the corresponding Linked List.
+//            create base structure (0 to 9 keyset)
+//            if ones place of digit matches key, then it goes with that key
+//            then sort by tens place digit after outputting that hashmap to an array
+//            then do it again by the hundreds place and so on
+//            also, it's not a hashmap. It's a linked list of linked lists because fuck you.
+//
+//            k = max(A)
+//            w = logb(k)
+//            for i from 0 to w
+//              countingsortbydigit(A,b,i)
+//
         }
         int j = 0; // index in A to place numbers
         for (LinkedList<Integer> list : L) {
             // TODO: Put all numbers in the linked lists into A
+//
+//
+//
+//
+//
+//
+//
         }
     }
 
     /**
      * Runtime: TODO: Express your runtime in terms of n, b, and w
+     *
      *
      * n: length of array
      * w: word length of integers A in base b (equal to log base b of k (log_b k) )
@@ -45,6 +64,13 @@ public class RadixSort {
             k = (A[i] + 1 > k) ? A[i] + 1 : k;
         int w = (int) Math.ceil(Math.log(k) / Math.log(b)); // w = log base b of k, word length of numbers
         // TODO: Perform radix sort
+//
+//
+//
+//
+//
+//
+//
     }
 
 }
