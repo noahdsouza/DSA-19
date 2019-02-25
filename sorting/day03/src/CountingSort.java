@@ -14,7 +14,7 @@ public class CountingSort {
         // TODO
         int k = 0;
         for (int i=0; i<A.length; i++) {
-            
+
         }
 //        get max #
 //        make new array with size max+1
