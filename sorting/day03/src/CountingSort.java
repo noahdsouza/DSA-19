@@ -6,15 +6,29 @@ public class CountingSort {
     /**
      * Use counting sort to sort non-negative integer array A.
      * Runtime: TODO
-     * Time Complexity is O(n)
+     * Time Complexity is O(n+k)
      * Space Complexity is O(k)
      * k: maximum element in array A
      */
     static void countingSort(int[] A) {
         // TODO
-        int k = 0;
-        for (int i=0; i<A.length; i++) {
-
+        int k = A[0];
+        for (int i=1; i<A.length; i++) {
+            if (A[i] > k) {
+                k = A[i];
+            }
+        }
+        int[] counts = new int[k+1];
+        for (int j : A) {
+            counts[j]++;
+        }
+        int oof = 0;
+        for (int m=0; m<k+1; m++) {
+            while (counts[m] != 0) {
+                A[oof] = m;
+                counts[m]--;
+                oof++;
+            }
         }
 //        get max #
 //        make new array with size max+1

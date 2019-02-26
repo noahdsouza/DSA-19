@@ -35,6 +35,7 @@ public class RadixSortTests {
         for (int m : max_values) {
             for (int b : bases) {
                 int[] A = generateRandomArrayOfSize(10000, 0, m);
+//                System.out.println("origin" + Arrays.toString(A));
                 int[] sorted = sort(A);
                 RadixSort.radixSort(A, b);
                 assertArrayEquals(A, sorted);
