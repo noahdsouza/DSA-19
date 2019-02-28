@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -73,6 +74,7 @@ public class PeakFindingTest {
                 nums[i][j] = i + j;
             }
         }
+        PeakFinding.print2D(nums);
         isValidTwoDSolution(nums, PeakFinding.findTwoDPeak(nums));
     }
 
@@ -84,6 +86,7 @@ public class PeakFindingTest {
                 nums[i][j] = 0;
             }
         }
+        PeakFinding.print2D(nums);
         isValidTwoDSolution(nums, PeakFinding.findTwoDPeak(nums));
     }
 
@@ -95,6 +98,7 @@ public class PeakFindingTest {
                 nums[i][j] = -1 * Math.abs(i - 50) - Math.abs(j - 50) + 100;
             }
         }
+        PeakFinding.print2D(nums);
         isValidTwoDSolution(nums, PeakFinding.findTwoDPeak(nums));
     }
 
@@ -106,6 +110,7 @@ public class PeakFindingTest {
                 nums[i][j] = Math.abs(i - 50) + Math.abs(j - 50);
             }
         }
+        PeakFinding.print2D(nums);
         isValidTwoDSolution(nums, PeakFinding.findTwoDPeak(nums));
     }
 
@@ -120,6 +125,7 @@ public class PeakFindingTest {
                 {0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0}
         };
+        PeakFinding.print2D(nums);
         isValidTwoDSolution(nums, PeakFinding.findTwoDPeak(nums));
     }
 
@@ -132,6 +138,7 @@ public class PeakFindingTest {
                 nums[i][j] = gen.nextInt() % 1000;
             }
         }
+        PeakFinding.print2D(nums);
         isValidTwoDSolution(nums, PeakFinding.findTwoDPeak(nums));
     }
 
@@ -146,6 +153,7 @@ public class PeakFindingTest {
                 {1, 2, 5, 4, 3, 6, 7},
                 {1, 2, 5, 4, 3, 6, 7},
         };
+        PeakFinding.print2D(nums);
         isValidTwoDSolution(nums, PeakFinding.findTwoDPeak(nums));
     }
 
@@ -162,6 +170,7 @@ public class PeakFindingTest {
             int x = ThreadLocalRandom.current().nextInt(100);
             nums[y][x] = ThreadLocalRandom.current().nextInt(201);
         }
+        PeakFinding.print2D(nums);
         isValidTwoDSolution(nums, PeakFinding.findTwoDPeak(nums));
     }
 }
