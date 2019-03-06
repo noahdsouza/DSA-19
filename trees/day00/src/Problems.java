@@ -22,7 +22,8 @@ public class Problems {
             return oof;
         }
         oof.add(temp.get(median));
-
+//        idk why I named this function hamburger helper
+//        I'm delirious
         hamburgerHelper(0,median,temp,oof);
         hamburgerHelper(median,temp.size(),temp,oof);
         return oof;
