@@ -5,6 +5,17 @@ import java.util.NoSuchElementException;
 
 public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
 
+    /**LLRB trees are good because:
+     *    - Faster insertion and removal (fewer rotations)
+     *    - Relaxed balancing
+     *    - Only one bit of information needed per node
+     *    - Used a lot in libraries
+     *
+     * LLRB trees are less good because:
+     *    - Slower lookup than AVL trees
+     *    - Less strict balancing
+     *    - Less useful for databases
+     */
     public static final boolean RED = true;
     public static final boolean BLACK = false;
 
@@ -50,6 +61,8 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
     // make a right-leaning link lean to the left
     TreeNode<T> rotateLeft(TreeNode<T> h) {
         // TODO
+//        Literally the same thing as rotateRight but with the
+//        directions flipped
         TreeNode<T> x = h.rightChild;
         h.rightChild = x.leftChild;
         x.leftChild = h;
@@ -80,12 +93,15 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
      */
     private TreeNode<T> balance(TreeNode<T> h) {
         // TODO
+//        case 1
         if (isRed(h.rightChild)) {
             h=rotateLeft(h);
         }
+//        case 2
         if (isRed(h.leftChild) && isRed(h.leftChild.leftChild)) {
             h=rotateRight(h);
         }
+//        case 3
         if (isRed(h.rightChild) && isRed(h.leftChild)) {
             h=flipColors(h);
         }
@@ -95,13 +111,13 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
 
     /**
      * Recursively insert a new node into the BST
-     * Runtime: TODO
+     * Runtime: O(log(n))
      */
     @Override
     TreeNode<T> insert(TreeNode<T> h, T key) {
         h = super.insert(h, key);
         // TODO: use balance to correct for the three rotation cases
-//        that's all folks
+//        that's all folks, balance takes care of it all
         return balance(h);
     }
 
