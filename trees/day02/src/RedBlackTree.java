@@ -1,3 +1,5 @@
+import com.sun.source.tree.Tree;
+
 import java.util.NoSuchElementException;
 
 
@@ -36,31 +38,57 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
     // make a left-leaning link lean to the right
     TreeNode<T> rotateRight(TreeNode<T> h) {
         // TODO
-        return h;
+//        ONLY ROTATE RED LINKS TO MAINTAIN BLACK LINK BALANCE
+        TreeNode<T> x = h.leftChild;
+        h.leftChild = x.rightChild;
+        x.rightChild = h;
+        x.color = x.rightChild.color;
+        x.rightChild.color = RED;
+        return x;
     }
 
     // make a right-leaning link lean to the left
     TreeNode<T> rotateLeft(TreeNode<T> h) {
         // TODO
-        return h;
+        TreeNode<T> x = h.rightChild;
+        h.rightChild = x.leftChild;
+        x.leftChild = h;
+        x.color = x.leftChild.color;
+        x.leftChild.color = RED;
+        return x;
     }
 
     // flip the colors of a TreeNode and its two children
     TreeNode<T> flipColors(TreeNode<T> h) {
         // TODO
+//        Literally just change red to black and black to red
+//        for all of h's links (including itself).
+//        Used to make child links black and send red up
+        h.color = !h.color;
+        h.leftChild.color = !h.leftChild.color;
+        h.rightChild.color = !h.rightChild.color;
         return h;
     }
 
 
     /**
      * fix three cases:
-     *   1. h.right is red
-     *   2. h.left is red, and h.left.left is red
-     *   2. h.left and h.right are red
+     *   1. h.right is red --> rotate h left
+     *   2. h.left is red, and h.left.left is red --> rotate h right
+     *   2. h.left and h.right are red --> flip colors
      * return balanced node
      */
     private TreeNode<T> balance(TreeNode<T> h) {
         // TODO
+        if (isRed(h.rightChild)) {
+            h=rotateLeft(h);
+        }
+        if (isRed(h.leftChild) && isRed(h.leftChild.leftChild)) {
+            h=rotateRight(h);
+        }
+        if (isRed(h.rightChild) && isRed(h.leftChild)) {
+            h=flipColors(h);
+        }
         return h;
     }
 
@@ -73,7 +101,8 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
     TreeNode<T> insert(TreeNode<T> h, T key) {
         h = super.insert(h, key);
         // TODO: use balance to correct for the three rotation cases
-        return h;
+//        that's all folks
+        return balance(h);
     }
 
 
@@ -111,14 +140,68 @@ public class RedBlackTree<T extends Comparable<T>> extends BinarySearchTree<T> {
     }
 
     // delete the key-value pair with the minimum key rooted at h
+    public void deleteMin() {
+        root = deleteMin(root);
+        root.color = BLACK;
+    }
+
     TreeNode<T> deleteMin(TreeNode<T> h) {
         // OPTIONAL TODO: write this function and use it in delete(h, key)
+        if (h.leftChild==null) {
+            return null;
+        }
+        if (!isRed(h.leftChild) && !isRed(h.leftChild.leftChild)) {
+            h = moveRedLeft(h);
+        }
+        h.leftChild = deleteMin(h.leftChild);
+        return balance(h);
+    }
+
+    private TreeNode<T> moveRedLeft(TreeNode<T> h) {
+        flipColors(h);
+        if (isRed(h.rightChild.leftChild)) {
+            h.rightChild=rotateRight(h.rightChild);
+            h=rotateLeft(h);
+            flipColors(h);
+        }
         return h;
     }
+    private TreeNode<T> moveRedRight(TreeNode<T> h) {
+        flipColors(h);
+        if (isRed(h.leftChild.leftChild)) {
+            h=rotateRight(h);
+            flipColors(h);
+        }
+        return h;
+    }
+
     // delete the key-value pair with the given key rooted at h
     TreeNode<T> delete(TreeNode<T> h, T key) {
         // OPTIONAL TODO
-        return h;
+        int c = key.compareTo(h.key);
+        if (c<0) {
+            if (!isRed(h.leftChild) && !isRed(h.leftChild.leftChild)) {
+                h = moveRedLeft(h);
+            }
+            h.leftChild = delete(h.leftChild,key);
+        } else {
+            if (isRed(h.leftChild)) {
+                h = rotateRight(h);
+            }
+            if (c==0 && h.rightChild==null) {
+                return null;
+            }
+            if (!isRed(h.rightChild) && !isRed(h.rightChild.leftChild)) {
+                h = moveRedRight(h);
+            }
+            if (c==0) {
+                h.key = min(h.rightChild).key;
+                h.rightChild = deleteMin(h.rightChild);
+            } else {
+                h.rightChild = delete(h.rightChild,key);
+            }
+        }
+        return balance(h);
     }
 
     // ====================================

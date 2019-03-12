@@ -46,6 +46,8 @@ public class BinarySearchTree<T extends Comparable<T>> {
 //        1. traverse(root LC)
 //        2. print(root val)
 //        3. traverse(root RC)
+//        Average case runtime is O(n log(n))
+//        Worst case is O(n)
         List<T> son = new ArrayList<>();
         useMeDaddy(son,root);
         return son;
@@ -132,6 +134,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     private TreeNode<T> findPredecessor(TreeNode<T> n) {
         // TODO
+//        Worst case runtime: O(height)
         if (n.hasLeftChild()) {
             n = n.leftChild;
             while (n.hasRightChild()) {
@@ -152,6 +155,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     private TreeNode<T> findSuccessor(TreeNode<T> n) {
         // TODO
+//        Worst case runtime: O(height)
         if (n.hasRightChild()) {
             n = n.rightChild;
             while (n.hasLeftChild()) {
