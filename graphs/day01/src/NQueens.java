@@ -38,24 +38,6 @@ public class NQueens {
         return false;
     }
 
-//    private static boolean safe(char[][] board, int r, int c) {
-//        boolean diag = checkDiagonal(board,r,c);
-////        boolean horz = true;
-//        boolean vert = true;
-//
-//        for(int i=0; i<c; i++) {
-//            if(board[r][i]=='Q') {
-//                vert = false;
-//            }
-//        }
-//        if(diag && vert) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-
-
     /**
      * Creates a deep copy of the input array and returns it
      */
