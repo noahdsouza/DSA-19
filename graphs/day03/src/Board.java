@@ -11,13 +11,25 @@ public class Board {
 
     //TODO
     // Create a 2D array representing the solved board state
-    private int[][] goal = {{}};
+    private int[][] goal = {{1,2,3},{4,5,6},{7,8,0}};
 
     /*
      * Set the global board size and tile state
      */
     public Board(int[][] b) {
         // TODO: Your code here
+        tiles = copyOf(b);
+        n = b.length;
+    }
+
+    /*
+    Copied straight from the last DSA assignment lol
+     */
+    private static int[][] copyOf(int[][] A) {
+        int[][] B = new int[A.length][A[0].length];
+        for (int i = 0; i < A.length; i++)
+            System.arraycopy(A[i], 0, B[i], 0, A[0].length);
+        return B;
     }
 
     /*
@@ -26,7 +38,7 @@ public class Board {
      */
     private int size() {
         // TODO: Your code here
-        return 0;
+        return n;
     }
 
     /*
@@ -34,7 +46,17 @@ public class Board {
      */
     public int manhattan() {
         // TODO: Your code here
-        return 0;
+        int sum = 0;
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                if(tiles[i][j]!=0) {
+                    int xtarget = (tiles[i][j]-1) % n;
+                    int ytarget = (tiles[i][j]-1) / n;
+                    sum += Math.abs(j-xtarget) + Math.abs(i-ytarget);
+                }
+            }
+        }
+        return sum;
     }
 
     /*
@@ -42,7 +64,11 @@ public class Board {
      */
     public boolean isGoal() {
         // TODO: Your code here
-        return false;
+        if(tiles == goal) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /*
