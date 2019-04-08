@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,12 +20,21 @@ public class Board {
      */
     public Board(int[][] b) {
         // TODO: Your code here
-        tiles = copyOf(b);
-        n = b.length;
+        tiles =b;
+        n = tiles.length;
     }
 
     /*
-    Copied straight from the last DSA assignment lol
+     * Size of the board
+     (equal to 3 for 8 puzzle, 4 for 15 puzzle, 5 for 24 puzzle, etc)
+     */
+    private int size() {
+        // TODO: Your code here
+        return tiles.length;
+    }
+
+    /*
+    Make a  D E E P  copy of a thicc 2D array
      */
     private static int[][] copyOf(int[][] A) {
         int[][] B = new int[A.length][A[0].length];
@@ -33,26 +44,16 @@ public class Board {
     }
 
     /*
-     * Size of the board 
-     (equal to 3 for 8 puzzle, 4 for 15 puzzle, 5 for 24 puzzle, etc)
-     */
-    private int size() {
-        // TODO: Your code here
-        return n;
-    }
-
-    /*
      * Sum of the manhattan distances between the tiles and the goal
      */
     public int manhattan() {
         // TODO: Your code here
         int sum = 0;
-        for(int i=0; i<n; i++) {
-            for(int j=0; j<n; j++) {
-                if(tiles[i][j]!=0) {
-                    int xtarget = (tiles[i][j]-1) % n;
-                    int ytarget = (tiles[i][j]-1) / n;
-                    sum += Math.abs(j-xtarget) + Math.abs(i-ytarget);
+        for (int i =0; i<tiles.length;i++){
+            for(int j = 0; j<tiles[0].length;j++){
+                if (tiles[i][j]!=0){
+                    sum+=Math.abs(i-(tiles[i][j]-1)/n);
+                    sum+=Math.abs(j-(tiles[i][j]-1)%n);
                 }
             }
         }
@@ -64,11 +65,10 @@ public class Board {
      */
     public boolean isGoal() {
         // TODO: Your code here
-        if(tiles == goal) {
+        if(tiles.equals(goal)){
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /*
@@ -77,15 +77,67 @@ public class Board {
      */
     public boolean solvable() {
         // TODO: Your code here
+        int sum = 0;
+        for (int i =0; i<n*n;i++){
+            int idealx = i/n;
+            int idealy = i%n;
+            for(int j = i+1; j<n*n;j++){
+                int jdealx = j/n;
+                int jdealy = j%n;
+                if (tiles[idealy][idealx]>tiles[jdealy][jdealx]) {
+                    sum++;
+                }
+            }
+        }
+        System.out.println(sum);
+        if(sum%2==0){
+            return true;
+        }
         return false;
     }
 
     /*
      * Return all neighboring boards in the state tree
      */
-    public Iterable<Board> neighbors() {
+    public Iterable<Board> neighbors(){
         // TODO: Your code here
-        return null;
+        List<Board> neighbor=new ArrayList<>();
+        int blanki=0;
+        int blankj=0;
+        for(int i =0; i<n; i++){
+            for (int j = 0;j<n;j++ ){
+                if(tiles[i][j]==0){
+                    blanki=i;
+                    blankj=j;
+                    break;
+                }
+            }
+        }
+        if(blanki+1<n){
+            int[][] temp = copyOf(tiles);
+            temp[blanki][blankj]=temp[blanki+1][blankj];
+            temp[blanki+1][blankj]=0;
+            neighbor.add(new Board(temp));
+        }
+        if(blanki-1>0){
+            int[][] temp = copyOf(tiles);
+            temp[blanki][blankj]=temp[blanki-1][blankj];
+            temp[blanki-1][blankj]=0;
+            neighbor.add(new Board(temp));
+        }
+        if(blankj-1>0){
+            int[][] temp = copyOf(tiles);
+            temp[blanki][blankj]=temp[blanki][blankj-1];
+            temp[blanki][blankj-1]=0;
+            neighbor.add(new Board(temp));
+        }
+        if(blankj+1<n){
+            int[][] temp = copyOf(tiles);
+            temp[blanki][blankj]=temp[blanki][blankj+1];
+            temp[blanki][blankj+1]=0;
+            neighbor.add(new Board(temp));
+        }
+        return neighbor;
     }
 
     /*
