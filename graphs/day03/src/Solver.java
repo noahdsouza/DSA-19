@@ -47,7 +47,7 @@ public class Solver {
         private class compy implements Comparator<State> {
             @Override
             public int compare(State lop, State pop) {
-                return pop.cost - lop.cost;
+                return lop.cost - pop.cost;
             }
         }
     }
@@ -69,18 +69,61 @@ public class Solver {
     public Solver(Board initial) {
         // TODO: Your code here
         solutionState = new State(initial,0,null);
+        State.compy vamoos = solutionState.new compy();
+        PriorityQueue<State> options = new PriorityQueue(vamoos);
+        HashMap<State,State> open = new HashMap<>();
+        HashMap<State,State> closed = new HashMap<>();
         if(isSolvable()) {
-            while (!solutionState.board.isGoal()) {
-                State.compy vamoos = solutionState.new compy();
-                PriorityQueue<State> options = new PriorityQueue(vamoos);
-                for (Board bitch : solutionState.board.neighbors()) {
-                    options.add(new State(bitch, solutionState.moves + 1, solutionState));
+            while (solutionState.board.manhattan()!=0) {
+                System.out.println(options.size());
+                if(solutionState.board.isGoal()){
+                    return;
                 }
-                visited.add(solutionState);
-                solutionState = options.poll();
-                minMoves += 1;
+                for (Board bitch: solutionState.board.neighbors()) {
+                    State bleh = new State(bitch,solutionState.moves+1,solutionState);
+                    if(open.containsKey(bleh)){
+                        if(open.get(bleh).cost>bleh.cost){
+                            closed.put(bleh,open.get(bleh));
+                            open.put(bleh,bleh);
+                            options.add(bleh);
+                            continue;
+                        }
+                    }
+                    else if(closed.containsKey(bleh)){
+                        if(closed.get(bleh).cost>bleh.cost){
+                            open.put(bleh,bleh);
+                            options.add(bleh);
+                            continue;
+                        }
+                    }
+                    else {
+                        open.put(bleh, bleh);
+                        options.add(bleh);
+                    }
+                }
+                if(options.size()>0) {
+                    solutionState = options.poll();
+                    open.remove(solutionState);
+                    closed.put(solutionState,solutionState);
+                }
             }
+            State temp = new State(new Board(Board.copyOf(solutionState.board.tiles)),solutionState.moves,solutionState.prev);
+            while(temp!=null){
+                minMoves+=1;
+                temp=temp.prev;
+            }
+
         }
+    }
+
+    public void  printer(State j){
+        for(int[] blo: j.board.tiles){
+            for(int k: blo){
+                System.out.print(k);
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
     /*
