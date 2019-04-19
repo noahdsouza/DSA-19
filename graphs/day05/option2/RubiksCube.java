@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -5,6 +6,8 @@ import java.util.concurrent.ThreadLocalRandom;
 // this is our implementation of a rubiks cube. It is your job to use A* or some other search algorithm to write a
 // solve() function
 public class RubiksCube {
+
+    private char rot;
 
     private BitSet cube;
 
@@ -19,6 +22,28 @@ public class RubiksCube {
         }
     }
 
+    private class State{
+        private int cost;
+        private State prev;
+        private char rot;
+        private RubiksCube rubie;
+        private int moves;
+
+        public State(RubiksCube cobe,int moves, State pre) {
+            this.cost =cobe.heur() + moves;
+            this.prev=pre;
+            this.rot= cobe.rot;
+            this.rubie=cobe;
+            this.moves = moves;
+        }
+
+        private class comparator implements Comparator<State>{
+            @Override
+            public int compare(State A, State B){
+                return A.cost-B.cost;
+            }
+        }
+    }
     // initialize a rubiks cube with the input bitset
     private RubiksCube(BitSet s) {
         cube = (BitSet) s.clone();
@@ -36,6 +61,22 @@ public class RubiksCube {
             return false;
         RubiksCube other = (RubiksCube) obj;
         return other.cube.equals(cube);
+    }
+
+    public int heur(){
+        int huey=0;
+        for (int sad = 0; sad < 24; sad++) {
+            int collie = Math.abs(getColor(sad)-(sad/4));
+            if(collie==3){
+                huey+=2;
+            }
+            else if(collie!=0){
+                huey++;
+            }
+        }
+        System.out.println(huey/8);
+        return huey/8;
+
     }
 
     /**
@@ -99,7 +140,6 @@ public class RubiksCube {
         return rub;
     }
 
-
     // Given a character in ['u', 'U', 'r', 'R', 'f', 'F'], return a new rubik's cube with the rotation applied
     // Do not modify this rubik's cube.
     public RubiksCube rotate(char c) {
@@ -108,6 +148,7 @@ public class RubiksCube {
         int[] sidesFrom = null;
         int[] sidesTo = null;
         // colors move from the 'from' variable to the 'to' variable
+        rot = c;
         switch (c) {
             case 'u': // clockwise
             case 'U': // counterclockwise
@@ -131,7 +172,6 @@ public class RubiksCube {
                 sidesTo = new int[]{8, 11, 14, 15, 23, 20, 3, 2};
                 break;
             default:
-                System.out.println(c);
                 assert false;
         }
         // if performing a counter-clockwise rotation, swap from and to
@@ -187,11 +227,64 @@ public class RubiksCube {
         return listTurns;
     }
 
-
+    public Iterable<RubiksCube> neighbors(){
+        char[] bleh = {'u','U','r','R','f','F'};
+        ArrayList<RubiksCube> fucker = new ArrayList<>();
+        for(int i = 0; i<bleh.length;i++){ ;
+            fucker.add(rotate(bleh[i]));
+        }
+        return fucker;
+    }
     // return the list of rotations needed to solve a rubik's cube
     public List<Character> solve() {
         // TODO
-        return new ArrayList<>();
+        scrambledCube(100);
+        List <Character> fuck = new ArrayList<>();
+        State sol = new State(this,0,null);
+        State.comparator balance = sol.new comparator();
+        PriorityQueue<State> options = new PriorityQueue(balance);
+        HashMap<State,State> open = new HashMap<>();
+        HashMap<State,State> closed = new HashMap<>();
+        options.add(sol);
+        while (!options.isEmpty()) {
+            System.out.println("asd");
+            options.remove(sol);
+            if(sol.rubie.isSolved()){
+                break;
+            }
+            for (RubiksCube bitch: sol.rubie.neighbors()) {
+                State killa = new State(bitch,sol.moves+1,sol);
+                if(open.containsKey(killa)){
+                    if(open.get(killa).cost>sol.cost){
+                        closed.put(killa,open.get(killa));
+                        open.put(killa,killa);
+                        options.add(killa);
+                    }
+                }
+                else if(closed.containsKey(killa)){
+                    if(closed.get(killa).cost>sol.cost){
+                        open.put(killa,killa);
+                        options.add(killa);
+                    }
+                }
+                else {
+                    open.put(killa, killa);
+                    options.add(killa);
+                }
+            }
+            if(options.size()>0) {
+                sol = options.poll();
+                open.remove(sol);
+                closed.put(sol,sol);
+            }
+        }
+        State temp = new State(new RubiksCube(sol.rubie),sol.moves,sol.prev);
+        while(temp!=null){
+            fuck.add(temp.rot);
+            temp=temp.prev;
+        }
+        System.out.println(fuck);
+        return fuck;
     }
 
 }
