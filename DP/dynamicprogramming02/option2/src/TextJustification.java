@@ -16,6 +16,17 @@ public class TextJustification {
     }
 
     public static List<Integer> justifyText(String[] w, int m) {
+        // TODO
+        int n = w.length;
+        int[][] DP = new int[n+1][n+1];
+        int[][] line_cost = new int[n+1][n+1];
+        int[] opt = new int[n+1];
+        int[] solution = new int[n+1];
+
+        for(int i=1; i<=n; i++) {
+            DP[i][i] = m;
+        }
+
         return null;
     }
 
