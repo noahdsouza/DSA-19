@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class BalloonPopping {
-
+//    Runtime: O(B.length^3)
     public static int maxPoints(int[] B) {
         // TODO
         int[] A = new int[B.length+2];

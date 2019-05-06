@@ -1,4 +1,5 @@
 public class Regex {
+//    Runtime: O(s.length * p.length)
 
     public static boolean isMatch(String s, String p) {
         // TODO
